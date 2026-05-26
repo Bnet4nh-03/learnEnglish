@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Pro Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f6f5f1;
+      --surface: #ffffff;
+      --surface-2: #f0efe9;
+      --surface-3: #e8e7e0;
+      --border: #dddbd3;
+      --border-strong: #c9c7be;
+      --text: #1c1b18;
+      --text-2: #5a5850;
+      --text-3: #8a8880;
+      --accent: #1e4bd8;
+      --accent-light: #e8edff;
+      --accent-mid: #c0ccf8;
+      --danger: #c0392b;
+      --danger-light: #fdf0ee;
+      --success: #1a7a45;
+      --success-light: #edf7f2;
+      --nav-h: 58px;
+      --highlight-yellow: #fff3cd;
+      --highlight-green: #d4edda;
+      --highlight-blue: #cfe2ff;
+      --highlight-pink: #f8d7da;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      margin-right: 36px;
+      white-space: nowrap;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .nav-tab.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-tab .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    main {
+      margin-top: var(--nav-h);
+      padding: 32px 40px 60px;
+      max-width: 100%;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    /* ── THEORY TABLE ── */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .theory-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .theory-table thead tr {
+      background: var(--accent);
+    }
+
+    .theory-table thead th {
+      padding: 13px 18px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+
+    .theory-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+
+    .theory-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .theory-table tbody tr:hover {
+      background: var(--accent-light);
+    }
+
+    .theory-table tbody tr:nth-child(even) {
+      background: var(--surface-2);
+    }
+
+    .theory-table tbody tr:nth-child(even):hover {
+      background: var(--accent-light);
+    }
+
+    .theory-table td {
+      padding: 13px 18px;
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .theory-table td:first-child {
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--text);
+    }
+
+    .formula {
+      font-family: 'DM Mono', monospace;
+      font-size: 12.5px;
+      background: var(--surface-2);
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .example {
+      font-style: italic;
+      color: var(--text-2);
+    }
+
+    .time-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      background: var(--surface-3);
+      border-radius: 20px;
+      color: var(--text-2);
+      white-space: nowrap;
+      border: 1px solid var(--border);
+    }
+
+    /* ── QUIZ PAGE ── */
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .quiz-main { min-width: 0; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .quiz-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      flex: 1;
+      min-width: 200px;
+      appearance: none;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .btn {
+      padding: 9px 18px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--surface-2);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1a3fa8;
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-icon:hover {
+      background: var(--surface-2);
+    }
+
+    .btn-icon.danger:hover {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .btn-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    /* ── QUESTION CARD ── */
+    .q-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+
+    .q-card.correct {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+
+    .q-card.wrong {
+      border-color: var(--danger);
+      background: var(--danger-light);
+    }
+
+    .q-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .q-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.12s;
+      background: var(--surface);
+    }
+
+    .option-label:hover {
+      background: var(--surface-2);
+      border-color: var(--accent);
+    }
+
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .option-label span {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .result-box {
+      display: none;
+      padding: 14px;
+      border-radius: 7px;
+      background: var(--surface-2);
+      border-left: 3px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .result-box.correct {
+      background: var(--success-light);
+      border-left-color: var(--success);
+      color: #0d5c2d;
+    }
+
+    .result-box.wrong {
+      background: var(--danger-light);
+      border-left-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .result-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .result-explain {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    /* ── SIDEBAR ── */
+    .quiz-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      position: sticky;
+      top: 78px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px;
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-3);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .sidebar-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ── NOTES PAGE ── */
+    .notes-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .notes-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 78px;
+      height: calc(100vh - 150px);
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .notes-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      flex: 1;
+    }
+
+    .notes-count {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-left: 8px;
+    }
+
+    .notes-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .notes-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .note-item {
+      padding: 12px;
+      margin-bottom: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .note-item:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .note-item.active {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .note-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+
+    .note-item-preview {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-bottom: 6px;
+      white-space: normal;
+      line-height: 1.3;
+      max-height: 2.6em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .note-item-date {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .notes-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    .notes-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .note-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: var(--text-2);
+      font-size: 15px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .note-editor {
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      height: 600px;
+    }
+
+    .note-editor-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .note-title-input {
+      flex: 1;
+      min-width: 150px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .note-title-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .note-title-input::placeholder {
+      color: var(--text-3);
+    }
+
+    .note-toolbar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Highlight toolbar */
+    .highlight-toolbar {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      border-right: 1px solid var(--border);
+      padding-right: 8px;
+      margin-right: 8px;
+    }
+
+    .highlight-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.15s;
+    }
+
+    .highlight-btn:hover {
+      border-color: var(--text-3);
+    }
+
+    .highlight-btn.yellow {
+      background: var(--highlight-yellow);
+      border-color: #ffecad;
+    }
+
+    .highlight-btn.green {
+      background: var(--highlight-green);
+      border-color: #c3e6cb;
+    }
+
+    .highlight-btn.blue {
+      background: var(--highlight-blue);
+      border-color: #b6d4fe;
+    }
+
+    .highlight-btn.pink {
+      background: var(--highlight-pink);
+      border-color: #f5c6cb;
+    }
+
+    /* Content area with highlights */
+    .note-content-area {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .note-content-input {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      font-weight: 400;
+    }
+
+    .note-content-input::placeholder {
+      color: var(--text-3);
+    }
+
+    .note-content-input.highlight-yellow {
+      background-color: var(--highlight-yellow);
+    }
+
+    .note-content-input.highlight-green {
+      background-color: var(--highlight-green);
+    }
+
+    .note-content-input.highlight-blue {
+      background-color: var(--highlight-blue);
+    }
+
+    .note-content-input.highlight-pink {
+      background-color: var(--highlight-pink);
+    }
+
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-2);
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .quiz-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .notes-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .notes-panel {
+        position: static;
+        height: auto;
+        max-height: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 16px 40px;
+      }
+
+      .quiz-sidebar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">English Pro <span>Academy</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchPage('theory')">
+        <span class="material-symbols-outlined">school</span>
+        Theory
+      </button>
+      <button class="nav-tab" onclick="switchPage('quiz')">
+        <span class="material-symbols-outlined">quiz</span>
+        Quiz
+      </button>
+      <button class="nav-tab" onclick="switchPage('notes')">
+        <span class="material-symbols-outlined">notes</span>
+        Notes
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ── THEORY PAGE ── -->
+    <div id="theory-page" class="page active">
+      <div class="page-header">
+        <h1>English Grammar Theory</h1>
+        <p>Master English tenses, modals, and phrasal verbs</p>
+      </div>
+
+      <div class="table-card">
+        <table class="theory-table">
+          <thead>
+            <tr>
+              <th>Tense</th>
+              <th>Form</th>
+              <th>Use</th>
+              <th>Time Words</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Be Going To</td>
+              <td><span class="formula">S + am/is/are going to + V</span></td>
+              <td>Hành động được lên kế hoạch từ trước</td>
+              <td class="example">We are going to travel next month.</td>
+              <td><div class="time-words"><span class="tag">tonight</span><span class="tag">this weekend</span><span class="tag">next...</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Simple</td>
+              <td><span class="formula">S + V(s/es)</span></td>
+              <td>Thói quen, sự thật hiển nhiên, lịch trình</td>
+              <td class="example">She works every day.</td>
+              <td><div class="time-words"><span class="tag">always</span><span class="tag">usually</span><span class="tag">every day</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Simple</td>
+              <td><span class="formula">S + V2/ed</span></td>
+              <td>Hành động đã hoàn tất trong quá khứ</td>
+              <td class="example">They visited Hanoi yesterday.</td>
+              <td><div class="time-words"><span class="tag">yesterday</span><span class="tag">ago</span><span class="tag">last week</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Simple</td>
+              <td><span class="formula">S + will + V</span></td>
+              <td>Quyết định tức thời, dự đoán tương lai</td>
+              <td class="example">I will help you with that.</td>
+              <td><div class="time-words"><span class="tag">tomorrow</span><span class="tag">next week</span><span class="tag">soon</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Continuous</td>
+              <td><span class="formula">S + am/is/are + V-ing</span></td>
+              <td>Hành động đang diễn ra ngay lúc này</td>
+              <td class="example">I am studying right now.</td>
+              <td><div class="time-words"><span class="tag">now</span><span class="tag">at the moment</span><span class="tag">currently</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Continuous</td>
+              <td><span class="formula">S + was/were + V-ing</span></td>
+              <td>Hành động đang diễn ra tại thời điểm quá khứ</td>
+              <td class="example">I was sleeping when he called.</td>
+              <td><div class="time-words"><span class="tag">while</span><span class="tag">when</span><span class="tag">at that time</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Continuous</td>
+              <td><span class="formula">S + will be + V-ing</span></td>
+              <td>Hành động đang diễn ra tại thời điểm tương lai</td>
+              <td class="example">I will be working at 8 PM tomorrow.</td>
+              <td><div class="time-words"><span class="tag">at this time tomorrow</span><span class="tag">by then</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Perfect</td>
+              <td><span class="formula">S + have/has + V3</span></td>
+              <td>Hành động quá khứ có liên quan đến hiện tại</td>
+              <td class="example">She has finished her homework.</td>
+              <td><div class="time-words"><span class="tag">already</span><span class="tag">yet</span><span class="tag">since</span><span class="tag">for</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Perfect Continuous</td>
+              <td><span class="formula">S + have/has been + V-ing</span></td>
+              <td>Hành động tiếp tục từ quá khứ đến hiện tại</td>
+              <td class="example">I have been studying for 2 hours.</td>
+              <td><div class="time-words"><span class="tag">for</span><span class="tag">since</span><span class="tag">how long</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Perfect</td>
+              <td><span class="formula">S + had + V3</span></td>
+              <td>Hành động xảy ra trước một hành động quá khứ khác</td>
+              <td class="example">They had left before I arrived.</td>
+              <td><div class="time-words"><span class="tag">before</span><span class="tag">after</span><span class="tag">by the time</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Perfect Continuous</td>
+              <td><span class="formula">S + had been + V-ing</span></td>
+              <td>Hành động kéo dài trước một sự kiện quá khứ</td>
+              <td class="example">She had been crying for an hour.</td>
+              <td><div class="time-words"><span class="tag">for</span><span class="tag">since</span><span class="tag">before</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Perfect</td>
+              <td><span class="formula">S + will have + V3</span></td>
+              <td>Hành động hoàn tất trước một thời điểm tương lai</td>
+              <td class="example">She will have finished by tomorrow.</td>
+              <td><div class="time-words"><span class="tag">by</span><span class="tag">before</span><span class="tag">by the time</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── QUIZ PAGE ── -->
+    <div id="quiz-page" class="page">
+      <div class="page-header">
+        <h1>English Quiz</h1>
+        <p>Test your knowledge on grammar, tenses, and expressions</p>
+      </div>
+
+      <div class="quiz-layout">
+        <div class="quiz-main">
+          <div class="quiz-controls">
+            <select id="lessonSelect" onchange="renderQuiz()">
+              <option value="0">Lesson 1 - Basic Tenses</option>
+              <option value="1">Lesson 2 - Advanced Tenses</option>
+              <option value="2">Lesson 3 - Modals & Passive</option>
+              <option value="3">Lesson 4 - More Modals</option>
+              <option value="4">Lesson 5 - Phrasal Verbs</option>
+            </select>
+            <button class="btn btn-primary" onclick="submitQuiz()">
+              <span class="material-symbols-outlined">done_all</span>
+              Submit
+            </button>
+            <button class="btn" onclick="resetQuiz()">
+              <span class="material-symbols-outlined">refresh</span>
+              Reset
+            </button>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">
+            <span id="progressText">0%</span> completed
+          </div>
+
+          <div id="quiz"></div>
+        </div>
+
+        <div class="quiz-sidebar">
+          <div class="sidebar-section">
+            <span class="sidebar-label">Current Score</span>
+            <div class="sidebar-value" id="score">—</div>
+          </div>
+          <div class="sidebar-section">
+            <span class="sidebar-label">High Score</span>
+            <div class="sidebar-value" id="highScore">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NOTES PAGE ── -->
+    <div id="notes-page" class="page">
+      <div class="page-header">
+        <h1>My Notes</h1>
+        <p>Create and manage your learning notes</p>
+      </div>
+
+      <div class="notes-layout">
+        <div class="notes-panel">
+          <div class="notes-header">
+            <h3>
+              Notes
+              <span class="notes-count" id="notes-count">0 ghi chú</span>
+            </h3>
+            <div class="notes-actions">
+              <button class="btn-icon" onclick="newNote()" title="Mới">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+              <button class="btn-icon" onclick="exportNotesAsJson()" title="Export JSON">
+                <span class="material-symbols-outlined">download</span>
+              </button>
+              <button class="btn-icon" onclick="exportNotesAsText()" title="Export TXT">
+                <span class="material-symbols-outlined">text_fields</span>
+              </button>
+            </div>
+          </div>
+          <div class="notes-list" id="notesList">
+            <div class="notes-empty">Chưa có ghi chú nào.<br>Nhấn "Mới" để bắt đầu.</div>
+          </div>
+        </div>
+
+        <div class="notes-main">
+          <div class="note-placeholder" id="notePlaceholder">
+            👈 Chọn một ghi chú hoặc tạo mới để bắt đầu
+          </div>
+          <div class="note-editor" id="noteEditor" style="display:none;">
+            <div class="note-editor-toolbar">
+              <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Tiêu đề ghi chú..." oninput="autoSave()" />
+              
+              <div class="highlight-toolbar">
+                <button class="highlight-btn yellow" onclick="highlightSelection('yellow')" title="Highlight vàng" type="button">🟡</button>
+                <button class="highlight-btn green" onclick="highlightSelection('green')" title="Highlight xanh" type="button">🟢</button>
+                <button class="highlight-btn blue" onclick="highlightSelection('blue')" title="Highlight xanh dương" type="button">🔵</button>
+                <button class="highlight-btn pink" onclick="highlightSelection('pink')" title="Highlight hồng" type="button">🔴</button>
+                <button class="highlight-btn" onclick="clearHighlight()" title="Xóa highlight" type="button">✕</button>
+              </div>
+
+              <div class="note-toolbar-actions">
+                <button class="btn btn-primary"
+                        onclick="saveCurrentNote()">
+                  Save
+                </button>
+
+                <button class="btn-icon danger"
+                        onclick="deleteCurrentNote()"
+                        title="Xóa ghi chú">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
+                </button>
+
+              </div>
+            </div>
+            <div class="note-content-area">
+              <textarea class="note-content-input" id="noteContentInput" placeholder="Bắt đầu viết ghi chú của bạn..." oninput="autoSave()"></textarea>
+            </div>
+            <div class="note-meta">
+              <span id="noteMetaDate">—</span>
+              <span id="noteMetaWords">0 từ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="notes.js"></script>
+  <script>
+    // ── PAGE NAVIGATION ──
+    function switchPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(name + '-page').classList.add('active');
+      document.querySelector(`button[onclick="switchPage('${name}')"]`).classList.add('active');
+      if (name === 'quiz' && currentQuestions.length === 0) renderQuiz();
+      if (name === 'notes') renderNotesList();
+    }
+
+    // ── QUIZ ──
+    let currentQuestions = [];
+    let submittedAnswers = {};
+    let highScore = parseInt(localStorage.getItem('englishQuizHighScore') || '0');
+
+    document.getElementById('highScore').textContent = highScore > 0 ? `${highScore}/20` : '—';
+
+    function generateQuestions(base) {
+      return Array.from({ length: 20 }, (_, i) => ({ ...base[i % base.length], id: i + 1 }));
+    }
+
+    function updateProgress() {
+      let answered = currentQuestions.filter((_, i) => document.querySelector(`input[name="q${i}"]:checked`)).length;
+      const pct = Math.round((answered / 20) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '%';
+    }
+
+    function renderQuiz() {
+      const qEl = document.getElementById('quiz');
+      qEl.innerHTML = '';
+      submittedAnswers = {};
+      const idx = document.getElementById('lessonSelect').value;
+      currentQuestions = generateQuestions(lessons[idx]);
+
+      currentQuestions.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'q-card';
+        div.id = `question-${i}`;
+        div.innerHTML = `
+          <div class="q-num">Câu ${i + 1} / 20</div>
+          <div class="q-text">${q.question}</div>
+          <div class="options">
+            ${q.options.map((opt, j) => `
+              <label class="option-label">
+                <input type="radio" name="q${i}" value="${j}" onchange="updateProgress()" />
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="result-box" id="result-${i}"></div>
+        `;
+        qEl.appendChild(div);
+      });
+
+      document.getElementById('score').textContent = '—';
+      updateProgress();
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      currentQuestions.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        const rDiv = document.getElementById(`result-${i}`);
+        const qDiv = document.getElementById(`question-${i}`);
+        qDiv.classList.remove('correct', 'wrong');
+        rDiv.className = 'result-box';
+
+        if (sel) {
+          const ans = parseInt(sel.value);
+          submittedAnswers[i] = ans;
+          if (ans === q.answer) {
+            score++;
+            qDiv.classList.add('correct');
+            rDiv.classList.add('correct');
+            rDiv.innerHTML = `<div class="result-title">✔ Đúng!</div><div class="result-explain">${q.explanation}</div>`;
+          } else {
+            qDiv.classList.add('wrong');
+            rDiv.classList.add('wrong');
+            rDiv.innerHTML = `<div class="result-title" style="color:var(--danger)">✘ Sai!</div><div class="result-explain"><strong>Đáp án đúng:</strong> ${q.options[q.answer]}<br>${q.explanation}</div>`;
+          }
+        } else {
+          qDiv.classList.add('wrong');
+          rDiv.classList.add('wrong');
+          rDiv.innerHTML = `<div class="result-title" style="color:var(--danger)">✘ Chưa trả lời</div>`;
+        }
+        rDiv.style.display = 'block';
+      });
+
+      document.getElementById('score').textContent = `${score}/20`;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('englishQuizHighScore', highScore);
+        document.getElementById('highScore').textContent = `${highScore}/20`;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function saveCurrentNote() {
+      if (!currentNoteId) return;
+
+      const title =
+        document.getElementById('noteTitleInput').value;
+
+      const content =
+        document.getElementById('noteContentInput').value;
+
+      const updated =
+        NotesManager.update(
+          currentNoteId,
+          title,
+          content
+        );
+
+      if (updated) {
+        updateNoteMeta(updated);
+        renderNotesList();
+
+        alert('Đã lưu ghi chú');
+      }
+    }
+
+    function resetQuiz() {
+      submittedAnswers = {};
+      currentQuestions.forEach((_, i) => {
+        const r = document.querySelector(`input[name="q${i}"]:checked`);
+        if (r) r.checked = false;
+        const rDiv = document.getElementById(`result-${i}`);
+        const qDiv = document.getElementById(`question-${i}`);
+        rDiv.style.display = 'none';
+        qDiv.classList.remove('correct', 'wrong');
+      });
+      document.getElementById('score').textContent = '—';
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── NOTES ──
+    let currentNoteId = null;
+    let saveTimer = null;
+
+    // ── NOTE INFO VARIABLE ──
+    let currentNoteInfo = {
+      id: null,
+      title: '',
+      content: '',
+      createdAt: null,
+      updatedAt: null,
+      highlights: []
+    };
+
+    function renderNotesList() {
+      const notes = NotesManager.getAll();
+      const list = document.getElementById('notesList');
+      const countEl = document.getElementById('notes-count');
+      countEl.textContent = notes.length + ' ghi chú';
+
+      if (notes.length === 0) {
+        list.innerHTML = '<div class="notes-empty">Chưa có ghi chú nào.<br>Nhấn "Mới" để bắt đầu.</div>';
+        return;
+      }
+
+      list.innerHTML = notes.map(n => `
+        <div class="note-item ${n.id === currentNoteId ? 'active' : ''}" onclick="openNote(${n.id})">
+          <div class="note-item-title">${escapeHtml(n.title)}</div>
+          <div class="note-item-preview">${escapeHtml(n.content.substring(0, 60)) || 'Không có nội dung'}</div>
+          <div class="note-item-date">${NotesManager.formatDate(n.updatedAt)}</div>
+        </div>
+      `).join('');
+    }
+
+    function newNote() {
+      const note = NotesManager.add('', '');
+      currentNoteId = note.id;
+      currentNoteInfo = {
+        id: note.id,
+        title: '',
+        content: '',
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+        highlights: []
+      };
+      renderNotesList();
+      showEditor(note);
+      document.getElementById('noteTitleInput').focus();
+    }
+
+    function openNote(id) {
+      const notes = NotesManager.getAll();
+      const note = notes.find(n => n.id === id);
+      if (!note) return;
+      currentNoteId = id;
+      currentNoteInfo = {
+        id: note.id,
+        title: note.title,
+        content: note.content,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+        highlights: note.highlights || []
+      };
+      renderNotesList();
+      showEditor(note);
+    }
+
+    function showEditor(note) {
+      document.getElementById('notePlaceholder').style.display = 'none';
+      document.getElementById('noteEditor').style.display = 'flex';
+      document.getElementById('noteTitleInput').value = note.title === 'Ghi chú không tiêu đề' ? '' : note.title;
+      document.getElementById('noteContentInput').value = note.content;
+      updateNoteMeta(note);
+    }
+
+    function updateNoteMeta(note) {
+      document.getElementById('noteMetaDate').textContent = 'Cập nhật: ' + NotesManager.formatDate(note.updatedAt);
+      const words = note.content ? note.content.trim().split(/\s+/).filter(Boolean).length : 0;
+      document.getElementById('noteMetaWords').textContent = words + ' từ';
+    }
+
+    function autoSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        if (!currentNoteId) return;
+        const title = document.getElementById('noteTitleInput').value;
+        const content = document.getElementById('noteContentInput').value;
+        const updated = NotesManager.update(currentNoteId, title, content);
+        if (updated) {
+          updateNoteMeta(updated);
+          renderNotesList();
+          // Update currentNoteInfo
+          currentNoteInfo.title = title;
+          currentNoteInfo.content = content;
+          currentNoteInfo.updatedAt = updated.updatedAt;
+        }
+      }, 400);
+    }
+
+    function deleteCurrentNote() {
+      if (!currentNoteId) return;
+      if (!confirm('Xóa ghi chú này?')) return;
+      NotesManager.delete(currentNoteId);
+      currentNoteId = null;
+      currentNoteInfo = {
+        id: null,
+        title: '',
+        content: '',
+        createdAt: null,
+        updatedAt: null,
+        highlights: []
+      };
+      document.getElementById('noteEditor').style.display = 'none';
+      document.getElementById('notePlaceholder').style.display = 'flex';
+      renderNotesList();
+    }
+
+    // ── HIGHLIGHT FUNCTIONS ──
+    function highlightSelection(color) {
+      const textarea = document.getElementById('noteContentInput');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = textarea.value.substring(start, end);
+
+      if (!selectedText) {
+        alert('Vui lòng chọn văn bản để highlight');
+        return;
+      }
+
+      // Store highlight info
+      if (!currentNoteInfo.highlights) {
+        currentNoteInfo.highlights = [];
+      }
+
+      currentNoteInfo.highlights.push({
+        start: start,
+        end: end,
+        text: selectedText,
+        color: color
+      });
+
+      // Visual feedback - tạo highlighted text
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+      
+      // Create highlighted version display
+      const highlightedDisplay = `[${color.toUpperCase()}] ${selectedText}`;
+      const newContent = before + `<<${highlightedDisplay}>>` + after;
+      
+      textarea.value = newContent;
+      textarea.style.backgroundColor = color === 'yellow' ? 'var(--highlight-yellow)' : 
+                                       color === 'green' ? 'var(--highlight-green)' :
+                                       color === 'blue' ? 'var(--highlight-blue)' :
+                                       'var(--highlight-pink)';
+      
+      autoSave();
+    }
+
+    function clearHighlight() {
+      const textarea = document.getElementById('noteContentInput');
+      textarea.style.backgroundColor = 'transparent';
+      if (currentNoteInfo.highlights) {
+        currentNoteInfo.highlights = [];
+      }
+      autoSave();
+    }
+
+    // ── EXPORT FUNCTIONS ──
+    function exportNotesAsJson() {
+      const notes = NotesManager.getAll();
+      const dataStr = JSON.stringify(notes, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `notes-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportNotesAsText() {
+      const notes = NotesManager.getAll();
+      let textContent = '=== MY LEARNING NOTES ===\n';
+      textContent += `Exported: ${new Date().toLocaleString()}\n`;
+      textContent += '='.repeat(50) + '\n\n';
+
+      notes.forEach((note, index) => {
+        textContent += `NOTE ${index + 1}: ${note.title || 'Ghi chú không tiêu đề'}\n`;
+        textContent += '-'.repeat(40) + '\n';
+        textContent += `Created: ${NotesManager.formatDate(note.createdAt)}\n`;
+        textContent += `Updated: ${NotesManager.formatDate(note.updatedAt)}\n`;
+        textContent += `Words: ${note.content.trim().split(/\s+/).filter(Boolean).length}\n\n`;
+        textContent += `${note.content}\n`;
+        textContent += '\n' + '='.repeat(50) + '\n\n';
+      });
+
+      const dataBlob = new Blob([textContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `notes-${new Date().toISOString().slice(0, 10)}.txt`;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(str = '') {
+      return str
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+  </script>
+</body>
+</html>
