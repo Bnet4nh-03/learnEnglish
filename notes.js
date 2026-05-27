@@ -1,144 +1,210 @@
-// ── NOTES MANAGER ──
-const NotesManager = {
-  storageKey: 'englishAcademyNotes',
+// ── NOTES MANAGER (no localStorage) ──
+// This version seeds from notes-data.js (window.notesData) and operates
+// entirely in-memory. Use `exportToNotesJs()` to download an updated
+// notes-data.js file that re-seeds the app when loaded.
 
-  // Lấy tất cả ghi chú
-  getAll() {
-    const stored = localStorage.getItem(this.storageKey);
-    return stored ? JSON.parse(stored) : [];
+const NotesManager = {
+  notes: [],
+  _sourceNotes: null,
+
+  // Load dữ liệu từ file notes-data.js (window.notesData)
+  init() {
+    if (this._inited) return true;
+    this._inited = true;
+
+    if (window.notesData && Array.isArray(window.notesData)) {
+      // clone source to work in-memory
+      this.notes = JSON.parse(JSON.stringify(window.notesData));
+      this._sourceNotes = JSON.parse(JSON.stringify(window.notesData));
+      console.info('NotesManager.init: seeded from window.notesData', this.notes.length);
+      return true;
+    }
+
+    // otherwise start empty
+    this.notes = [];
+    this._sourceNotes = [];
+    console.info('NotesManager.init: initialized empty notes (no localStorage)');
+    return true;
   },
 
-  // Thêm ghi chú mới
+  ready() {
+    return Promise.resolve(true);
+  },
+
+  // Return a sorted shallow copy (by updatedAt desc)
+  getAll() {
+    return [...this.notes].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  },
+
+  // Save in-memory only
+  save(notes) {
+    this.notes = notes;
+  },
+
+  // Add note
   add(title = '', content = '') {
     const notes = this.getAll();
+    const now = new Date().toISOString();
     const newNote = {
       id: Date.now(),
-      title: title || 'Ghi chú không tiêu đề',
-      content: content,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      title: title.trim() || 'Ghi chú không tiêu đề',
+      content: content.trim(),
+      createdAt: now,
+      updatedAt: now,
       highlights: []
     };
-    notes.push(newNote);
-    localStorage.setItem(this.storageKey, JSON.stringify(notes));
+    notes.unshift(newNote);
+    this.save(notes);
     return newNote;
   },
 
-  // Cập nhật ghi chú
-  update(id, title = '', content = '') {
+  // Update note
+  update(id, title = '', content = '', highlights) {
     const notes = this.getAll();
     const noteIndex = notes.findIndex(n => n.id === id);
-    
     if (noteIndex === -1) return null;
-
     notes[noteIndex] = {
       ...notes[noteIndex],
-      title: title || 'Ghi chú không tiêu đề',
-      content: content,
+      title: title.trim() || 'Ghi chú không tiêu đề',
+      content: content.trim(),
+      highlights: highlights !== undefined ? highlights : (notes[noteIndex].highlights || []),
       updatedAt: new Date().toISOString()
     };
-
-    localStorage.setItem(this.storageKey, JSON.stringify(notes));
+    this.save(notes);
     return notes[noteIndex];
   },
 
-  // Xóa ghi chú
+  // Delete note
   delete(id) {
-    const notes = this.getAll();
-    const filtered = notes.filter(n => n.id !== id);
-    localStorage.setItem(this.storageKey, JSON.stringify(filtered));
+    const notes = this.getAll().filter(n => n.id !== id);
+    this.save(notes);
+    return true;
   },
 
-  // Định dạng ngày tháng
+  // Date formatting (unchanged)
   formatDate(dateString) {
     if (!dateString) return '—';
     const date = new Date(dateString);
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-
-    // Kiểm tra nếu là hôm nay
     if (date.toDateString() === today.toDateString()) {
       return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
     }
-
-    // Kiểm tra nếu là hôm qua
     if (date.toDateString() === yesterday.toDateString()) {
       return 'Hôm qua';
     }
-
-    // Kiểm tra nếu trong tuần này
     const daysDiff = Math.floor((today - date) / (1000 * 60 * 60 * 24));
-    if (daysDiff < 7) {
-      return `${daysDiff} ngày trước`;
-    }
-
-    // Ngày cụ thể
-    return date.toLocaleDateString('vi-VN', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
+    if (daysDiff < 7) return `${daysDiff} ngày trước`;
+    return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
   },
 
-  // Thêm highlight vào ghi chú
+  // Highlights
   addHighlight(id, highlight) {
     const notes = this.getAll();
     const noteIndex = notes.findIndex(n => n.id === id);
-    
     if (noteIndex === -1) return null;
-
-    if (!notes[noteIndex].highlights) {
-      notes[noteIndex].highlights = [];
-    }
-
-    notes[noteIndex].highlights.push({
-      ...highlight,
-      highlightId: Date.now()
-    });
-
-    localStorage.setItem(this.storageKey, JSON.stringify(notes));
+    if (!notes[noteIndex].highlights) notes[noteIndex].highlights = [];
+    notes[noteIndex].highlights.push({ ...highlight, highlightId: Date.now() });
+    this.save(notes);
     return notes[noteIndex];
   },
 
-  // Xóa highlight
   removeHighlight(id, highlightId) {
     const notes = this.getAll();
     const noteIndex = notes.findIndex(n => n.id === id);
-    
     if (noteIndex === -1) return null;
-
-    notes[noteIndex].highlights = notes[noteIndex].highlights.filter(h => h.highlightId !== highlightId);
-    localStorage.setItem(this.storageKey, JSON.stringify(notes));
+    notes[noteIndex].highlights = (notes[noteIndex].highlights || []).filter(h => h.highlightId !== highlightId);
+    this.save(notes);
     return notes[noteIndex];
   },
 
-  // Lấy tất cả highlight của một ghi chú
   getHighlights(id) {
-    const notes = this.getAll();
-    const note = notes.find(n => n.id === id);
+    const note = this.getAll().find(n => n.id === id);
     return note ? (note.highlights || []) : [];
   },
 
-  // Xuất dữ liệu ghi chú
-  export() {
-    return {
-      exportDate: new Date().toISOString(),
-      notes: this.getAll()
-    };
+  // Export JSON file (same as before)
+  exportToFile() {
+    const data = JSON.stringify(this.getAll(), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `notes-backup-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   },
 
-  // Nhập dữ liệu ghi chú
-  import(data) {
+  // Export as JS assignment file (notes-data.js style)
+  exportToNotesJs(filename = `notes-data-${Date.now()}.js`) {
     try {
-      if (Array.isArray(data)) {
-        localStorage.setItem(this.storageKey, JSON.stringify(data));
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Import error:', error);
+      const arr = this.getAll();
+      const js = 'window.notesData = ' + JSON.stringify(arr, null, 2) + ';\n';
+      const blob = new Blob([js], { type: 'application/javascript' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      return true;
+    } catch (e) {
+      console.error('exportToNotesJs failed', e);
       return false;
     }
+  },
+
+  // Import from file — supports JSON array or notes-data.js (window.notesData = [...];)
+  async importFromFile(file) {
+    try {
+      const text = await file.text();
+      let parsed = null;
+      try {
+        parsed = JSON.parse(text);
+      } catch (e) {
+        const m = text.match(/window\.notesData\s*=\s*(\[([\s\S]*)\]);?/m);
+        if (m && m[1]) {
+          try {
+            parsed = JSON.parse(m[1]);
+          } catch (e2) {
+            try {
+              const fn = new Function('return ' + m[1]);
+              parsed = fn();
+            } catch (e3) {
+              parsed = null;
+            }
+          }
+        }
+      }
+      if (!Array.isArray(parsed)) throw new Error('File không hợp lệ: không tìm thấy mảng ghi chú');
+      this.notes = parsed;
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  },
+
+  // Reset in-memory notes to original source from notes-data.js (if present)
+  resetFromSource() {
+    if (this._sourceNotes) {
+      this.notes = JSON.parse(JSON.stringify(this._sourceNotes));
+      return true;
+    }
+    return false;
   }
+};
+
+// Khởi tạo
+NotesManager.init();
+
+// Debug helper
+window.NotesManager_debug = function() {
+  console.log('NotesManager.notes', NotesManager.notes);
+  console.log('NotesManager.source', NotesManager._sourceNotes);
 };

@@ -1058,7 +1058,9 @@
 
   </main>
 
+  <script src="questions-data.js"></script>
   <script src="questions.js"></script>
+  <script src="notes-data.js"></script>
   <script src="notes.js"></script>
   <script>
     // ── PAGE NAVIGATION ──
@@ -1068,7 +1070,12 @@
       document.getElementById(name + '-page').classList.add('active');
       document.querySelector(`button[onclick="switchPage('${name}')"]`).classList.add('active');
       if (name === 'quiz' && currentQuestions.length === 0) renderQuiz();
-      if (name === 'notes') renderNotesList();
+      if (name === 'notes') {
+        const ready = NotesManager && typeof NotesManager.ready === 'function'
+          ? NotesManager.ready()
+          : Promise.resolve(true);
+        ready.then(() => renderNotesList());
+      }
     }
 
     // ── QUIZ ──
@@ -1172,7 +1179,8 @@
         NotesManager.update(
           currentNoteId,
           title,
-          content
+          content,
+          currentNoteInfo.highlights
         );
 
       if (updated) {
@@ -1285,7 +1293,7 @@
         if (!currentNoteId) return;
         const title = document.getElementById('noteTitleInput').value;
         const content = document.getElementById('noteContentInput').value;
-        const updated = NotesManager.update(currentNoteId, title, content);
+        const updated = NotesManager.update(currentNoteId, title, content, currentNoteInfo.highlights);
         if (updated) {
           updateNoteMeta(updated);
           renderNotesList();
