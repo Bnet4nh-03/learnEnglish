@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Pro Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f6f5f1;
+      --surface: #ffffff;
+      --surface-2: #f0efe9;
+      --surface-3: #e8e7e0;
+      --border: #dddbd3;
+      --border-strong: #c9c7be;
+      --text: #1c1b18;
+      --text-2: #5a5850;
+      --text-3: #8a8880;
+      --accent: #1e4bd8;
+      --accent-light: #e8edff;
+      --accent-mid: #c0ccf8;
+      --danger: #c0392b;
+      --danger-light: #fdf0ee;
+      --success: #1a7a45;
+      --success-light: #edf7f2;
+      --nav-h: 58px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      margin-right: 36px;
+      white-space: nowrap;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .nav-tab.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-tab .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    main {
+      margin-top: var(--nav-h);
+      padding: 32px 40px 60px;
+      max-width: 100%;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    /* ── THEORY TABLE ── */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .theory-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .theory-table thead tr {
+      background: var(--accent);
+    }
+
+    .theory-table thead th {
+      padding: 13px 18px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+
+    .theory-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+
+    .theory-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .theory-table tbody tr:hover {
+      background: var(--accent-light);
+    }
+
+    .theory-table tbody tr:nth-child(even) {
+      background: var(--surface-2);
+    }
+
+    .theory-table tbody tr:nth-child(even):hover {
+      background: var(--accent-light);
+    }
+
+    .theory-table td {
+      padding: 13px 18px;
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .theory-table td:first-child {
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--text);
+    }
+
+    .formula {
+      font-family: 'DM Mono', monospace;
+      font-size: 12.5px;
+      background: var(--surface-2);
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .example {
+      font-style: italic;
+      color: var(--text-2);
+    }
+
+    .time-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      background: var(--surface-3);
+      border-radius: 20px;
+      color: var(--text-2);
+      white-space: nowrap;
+      border: 1px solid var(--border);
+    }
+
+    /* ── QUIZ PAGE ── */
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .quiz-main { min-width: 0; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .quiz-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      flex: 1;
+      min-width: 200px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5850' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    .progress-bar-wrap {
+      height: 4px;
+      background: var(--surface-3);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 6px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      padding: 18px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .q-card.correct { border-color: var(--success); background: var(--success-light); }
+    .q-card.wrong { border-color: var(--danger); background: var(--danger-light); }
+
+    .q-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 7px; }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 13.5px;
+      transition: all 0.12s;
+      background: var(--surface);
+    }
+
+    .option-label:hover { background: var(--accent-light); border-color: var(--accent-mid); }
+
+    .option-label input[type="radio"] {
+      width: 15px; height: 15px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .result-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .result-box.correct {
+      background: var(--success-light);
+      border-left: 3px solid var(--success);
+      color: var(--success);
+    }
+
+    .result-box.wrong {
+      background: var(--danger-light);
+      border-left: 3px solid var(--danger);
+    }
+
+    .result-box .result-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .result-box .result-explain {
+      color: var(--text-2);
+      font-weight: 400;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 7px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text);
+    }
+
+    .btn-outline:hover { background: var(--surface-2); }
+
+    /* Quiz sidebar */
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      position: sticky;
+      top: calc(var(--nav-h) + 16px);
+    }
+
+    .score-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 6px;
+    }
+
+    .score-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    .score-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    /* ── NOTES PAGE ── */
+    .notes-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .notes-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      position: sticky;
+      top: calc(var(--nav-h) + 16px);
+      max-height: calc(100vh - var(--nav-h) - 64px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notes-sidebar-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .notes-sidebar-header span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .btn-new-note {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-new-note:hover { opacity: 0.85; }
+    .btn-new-note .material-symbols-outlined { font-size: 15px; }
+
+    .notes-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .note-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .note-item:last-child { border-bottom: none; }
+    .note-item:hover { background: var(--surface-2); }
+    .note-item.active { background: var(--accent-light); border-left: 2px solid var(--accent); }
+
+    .note-item-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .note-item-preview {
+      font-size: 12px;
+      color: var(--text-3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .note-item-date {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    .notes-empty {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+
+    /* Note Editor */
+    .note-editor {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .note-editor-toolbar {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .note-title-input {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      border: none;
+      outline: none;
+      background: transparent;
+      flex: 1;
+      letter-spacing: -0.3px;
+    }
+
+    .note-title-input::placeholder { color: var(--text-3); }
+
+    .note-toolbar-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-2);
+      transition: all 0.12s;
+    }
+
+    .btn-icon:hover { background: var(--surface-2); color: var(--text); }
+    .btn-icon.danger:hover { background: var(--danger-light); color: var(--danger); border-color: var(--danger); }
+    .btn-icon .material-symbols-outlined { font-size: 16px; }
+
+    .note-content-area {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .note-content-input {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--text);
+      border: none;
+      outline: none;
+      background: transparent;
+      resize: none;
+    }
+
+    .note-content-input::placeholder { color: var(--text-3); }
+
+    .note-meta {
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11.5px;
+      color: var(--text-3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .note-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 400px;
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    .note-placeholder .material-symbols-outlined {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    /* Save indicator */
+    .save-indicator {
+      font-size: 11px;
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .save-indicator.show { opacity: 1; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+    @media (max-width: 900px) {
+      main { padding: 20px 16px 40px; }
+      .quiz-layout, .notes-layout { grid-template-columns: 1fr; }
+      .score-card, .notes-sidebar { position: static; }
+      .theory-table { font-size: 12px; }
+      .theory-table td, .theory-table th { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <nav>
+    <div class="nav-brand">English <span>Pro</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchPage('theory')">
+        <span class="material-symbols-outlined">menu_book</span>
+        Lý Thuyết
+      </button>
+      <button class="nav-tab" onclick="switchPage('quiz')">
+        <span class="material-symbols-outlined">quiz</span>
+        Đề Thi
+      </button>
+      <button class="nav-tab" onclick="switchPage('notes')">
+        <span class="material-symbols-outlined">edit_note</span>
+        Ghi Chú
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ THEORY PAGE ══ -->
+    <div id="theory-page" class="page active">
+      <div class="page-header">
+        <h1>English Tenses Mastery</h1>
+        <p>Bảng tóm tắt đầy đủ các thì tiếng Anh từ A1 đến C2 — công thức, cách dùng và ví dụ.</p>
+      </div>
+      <div class="table-card">
+        <table class="theory-table">
+          <thead>
+            <tr>
+              <th>Thì</th>
+              <th>Công Thức</th>
+              <th>Cách Dùng</th>
+              <th>Ví Dụ</th>
+              <th>Từ Chỉ Thời Gian</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Be Going To</td>
+              <td><span class="formula">S + am/is/are going to + V</span></td>
+              <td>Hành động được lên kế hoạch từ trước</td>
+              <td class="example">We are going to travel next month.</td>
+              <td><div class="time-words"><span class="tag">tonight</span><span class="tag">this weekend</span><span class="tag">next...</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Simple</td>
+              <td><span class="formula">S + V(s/es)</span></td>
+              <td>Thói quen, sự thật hiển nhiên, lịch trình</td>
+              <td class="example">She works every day.</td>
+              <td><div class="time-words"><span class="tag">always</span><span class="tag">usually</span><span class="tag">every day</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Simple</td>
+              <td><span class="formula">S + V2/ed</span></td>
+              <td>Hành động đã hoàn tất trong quá khứ</td>
+              <td class="example">They visited Hanoi yesterday.</td>
+              <td><div class="time-words"><span class="tag">yesterday</span><span class="tag">ago</span><span class="tag">last week</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Simple</td>
+              <td><span class="formula">S + will + V</span></td>
+              <td>Quyết định tức thời, dự đoán tương lai</td>
+              <td class="example">I will help you with that.</td>
+              <td><div class="time-words"><span class="tag">tomorrow</span><span class="tag">next week</span><span class="tag">soon</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Continuous</td>
+              <td><span class="formula">S + am/is/are + V-ing</span></td>
+              <td>Hành động đang diễn ra ngay lúc này</td>
+              <td class="example">I am studying right now.</td>
+              <td><div class="time-words"><span class="tag">now</span><span class="tag">at the moment</span><span class="tag">currently</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Continuous</td>
+              <td><span class="formula">S + was/were + V-ing</span></td>
+              <td>Hành động đang diễn ra tại thời điểm quá khứ</td>
+              <td class="example">I was sleeping when he called.</td>
+              <td><div class="time-words"><span class="tag">while</span><span class="tag">when</span><span class="tag">at that time</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Continuous</td>
+              <td><span class="formula">S + will be + V-ing</span></td>
+              <td>Hành động đang diễn ra tại thời điểm tương lai</td>
+              <td class="example">I will be working at 8 PM tomorrow.</td>
+              <td><div class="time-words"><span class="tag">at this time tomorrow</span><span class="tag">by then</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Perfect</td>
+              <td><span class="formula">S + have/has + V3</span></td>
+              <td>Hành động quá khứ có liên quan đến hiện tại</td>
+              <td class="example">She has finished her homework.</td>
+              <td><div class="time-words"><span class="tag">already</span><span class="tag">yet</span><span class="tag">since</span><span class="tag">for</span></div></td>
+            </tr>
+            <tr>
+              <td>Present Perfect Continuous</td>
+              <td><span class="formula">S + have/has been + V-ing</span></td>
+              <td>Hành động tiếp tục từ quá khứ đến hiện tại</td>
+              <td class="example">I have been studying for 2 hours.</td>
+              <td><div class="time-words"><span class="tag">for</span><span class="tag">since</span><span class="tag">how long</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Perfect</td>
+              <td><span class="formula">S + had + V3</span></td>
+              <td>Hành động xảy ra trước một hành động quá khứ khác</td>
+              <td class="example">They had left before I arrived.</td>
+              <td><div class="time-words"><span class="tag">before</span><span class="tag">after</span><span class="tag">by the time</span></div></td>
+            </tr>
+            <tr>
+              <td>Past Perfect Continuous</td>
+              <td><span class="formula">S + had been + V-ing</span></td>
+              <td>Hành động kéo dài trước một sự kiện quá khứ</td>
+              <td class="example">She had been crying for an hour.</td>
+              <td><div class="time-words"><span class="tag">for</span><span class="tag">since</span><span class="tag">before</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Perfect</td>
+              <td><span class="formula">S + will have + V3</span></td>
+              <td>Hành động hoàn tất trước một thời điểm tương lai</td>
+              <td class="example">She will have finished by tomorrow.</td>
+              <td><div class="time-words"><span class="tag">by</span><span class="tag">before</span><span class="tag">by the time</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <div class="table-card" style="margin-top:18px;">
+          <table class="theory-table">
+            <thead>
+              <tr>
+                <th>Loại</th>
+                <th>Công Thức</th>
+                <th>Cách Dùng</th>
+                <th>Ví Dụ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Zero Conditional</td>
+                <td><span class="formula">If + S + V(s/es), S + V(s/es)</span></td>
+                <td>Sự thật hiển nhiên, quy luật</td>
+                <td class="example">If you heat ice, it melts.</td>
+              </tr>
+              <tr>
+                <td>Type 1</td>
+                <td><span class="formula">If + S + V(s/es), S + will + V</span></td>
+                <td>Điều kiện có thể xảy ra trong tương lai</td>
+                <td class="example">If it rains, we will stay home.</td>
+              </tr>
+              <tr>
+                <td>Type 2</td>
+                <td><span class="formula">If + S + V2/ed, S + would + V</span></td>
+                <td>Điều kiện không có thật ở hiện tại/tương lai</td>
+                <td class="example">If I were rich, I would buy a villa.</td>
+              </tr>
+              <tr>
+                <td>Type 3</td>
+                <td><span class="formula">If + S + had + V3, S + would have + V3</span></td>
+                <td>Điều kiện không có thật trong quá khứ</td>
+                <td class="example">If she had studied harder, she would have passed.</td>
+              </tr>
+              <tr>
+                <td>Mixed Conditional</td>
+                <td><span class="formula">If + S + had + V3, S + would + V</span></td>
+                <td>Quá khứ ảnh hưởng hiện tại</td>
+                <td class="example">If I had slept earlier, I would feel better now.</td>
+              </tr>
+              <tr>
+                <td>Unless</td>
+                <td><span class="formula">Unless + S + V, S + will + V</span></td>
+                <td>“Nếu không”</td>
+                <td class="example">Unless you hurry, you will miss the bus.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <!-- ══ QUIZ PAGE ══ -->
+    <div id="quiz-page" class="page">
+      <div class="page-header">
+        <h1>Đề Thi Kiểm Tra</h1>
+        <p>20 câu hỏi trắc nghiệm — chọn bài học và kiểm tra kiến thức của bạn.</p>
+      </div>
+      <div class="quiz-layout">
+        <div class="quiz-main">
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="quiz-controls">
+              <select id="lessonSelect" onchange="renderQuiz()">
+                <option value="0">📚 Bài 1: Các Thì Cơ Bản</option>
+                <option value="1">📚 Bài 2: Các Thì Nâng Cao</option>
+                <option value="2">📚 Bài 3: Điều Kiện & Giả Định</option>
+                <option value="3">📚 Bài 4: Động Từ Khuyết Thiếu</option>
+                <option value="4">📚 Bài 5: Cụm Động Từ</option>
+              </select>
+            </div>
+            <div class="progress-label">
+              <span>Tiến độ</span>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div id="quiz"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="submitQuiz()">✓ Nộp Bài & Chấm Điểm</button>
+            <button class="btn btn-outline" onclick="resetQuiz()">↻ Làm Lại</button>
+          </div>
+        </div>
+
+        <!-- Score sidebar -->
+        <div class="score-card">
+          <div class="score-label">Điểm Hiện Tại</div>
+          <div class="score-value" id="score">—</div>
+          <div class="score-divider"></div>
+          <div class="score-label">Điểm Cao Nhất</div>
+          <div class="score-value" id="highScore" style="font-size: 24px;">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ NOTES PAGE ══ -->
+    <div id="notes-page" class="page">
+      <div class="page-header">
+        <h1>Ghi Chú</h1>
+        <p>Lưu lại những điều quan trọng trong quá trình học.</p>
+      </div>
+      <div class="notes-layout">
+        <!-- Sidebar -->
+        <div class="notes-sidebar">
+          <div class="notes-sidebar-header">
+            <span id="notes-count">0 ghi chú</span>
+            <button class="btn-new-note" onclick="newNote()">
+              <span class="material-symbols-outlined">add</span>
+              Mới
+            </button>
+          </div>
+          <div class="notes-list" id="notesList">
+            <div class="notes-empty">Chưa có ghi chú nào.<br>Nhấn "Mới" để bắt đầu.</div>
+          </div>
+        </div>
+
+        <!-- Editor -->
+        <div id="noteEditorWrapper">
+          <div class="note-placeholder" id="notePlaceholder">
+            <span class="material-symbols-outlined">edit_note</span>
+            <span>Chọn hoặc tạo ghi chú mới</span>
+          </div>
+          <div class="note-editor" id="noteEditor" style="display:none;">
+            <div class="note-editor-toolbar">
+              <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Tiêu đề ghi chú..." oninput="autoSave()" />
+              <div class="note-toolbar-actions">
+
+                <button class="btn btn-primary"
+                        onclick="saveCurrentNote()">
+                  Save
+                </button>
+
+                <button class="btn-icon danger"
+                        onclick="deleteCurrentNote()"
+                        title="Xóa ghi chú">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
+                </button>
+
+              </div>
+            </div>
+            <div class="note-content-area">
+              <textarea class="note-content-input" id="noteContentInput" placeholder="Bắt đầu viết ghi chú của bạn..." oninput="autoSave()"></textarea>
+            </div>
+            <div class="note-meta">
+              <span id="noteMetaDate">—</span>
+              <span id="noteMetaWords">0 từ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="notes.js"></script>
+  <script>
+    // ── PAGE NAVIGATION ──
+    function switchPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(name + '-page').classList.add('active');
+      document.querySelector(`button[onclick="switchPage('${name}')"]`).classList.add('active');
+      if (name === 'quiz' && currentQuestions.length === 0) renderQuiz();
+      if (name === 'notes') renderNotesList();
+    }
+
+    // ── QUIZ ──
+    let currentQuestions = [];
+    let submittedAnswers = {};
+    let highScore = parseInt(localStorage.getItem('englishQuizHighScore') || '0');
+
+    document.getElementById('highScore').textContent = highScore > 0 ? `${highScore}/20` : '—';
+
+    function generateQuestions(base) {
+      return Array.from({ length: 20 }, (_, i) => ({ ...base[i % base.length], id: i + 1 }));
+    }
+
+    function updateProgress() {
+      let answered = currentQuestions.filter((_, i) => document.querySelector(`input[name="q${i}"]:checked`)).length;
+      const pct = Math.round((answered / 20) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '%';
+    }
+
+    function renderQuiz() {
+      const qEl = document.getElementById('quiz');
+      qEl.innerHTML = '';
+      submittedAnswers = {};
+      const idx = document.getElementById('lessonSelect').value;
+      currentQuestions = generateQuestions(lessons[idx]);
+
+      currentQuestions.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'q-card';
+        div.id = `question-${i}`;
+        div.innerHTML = `
+          <div class="q-num">Câu ${i + 1} / 20</div>
+          <div class="q-text">${q.question}</div>
+          <div class="options">
+            ${q.options.map((opt, j) => `
+              <label class="option-label">
+                <input type="radio" name="q${i}" value="${j}" onchange="updateProgress()" />
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="result-box" id="result-${i}"></div>
+        `;
+        qEl.appendChild(div);
+      });
+
+      document.getElementById('score').textContent = '—';
+      updateProgress();
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      currentQuestions.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        const rDiv = document.getElementById(`result-${i}`);
+        const qDiv = document.getElementById(`question-${i}`);
+        qDiv.classList.remove('correct', 'wrong');
+        rDiv.className = 'result-box';
+
+        if (sel) {
+          const ans = parseInt(sel.value);
+          submittedAnswers[i] = ans;
+          if (ans === q.answer) {
+            score++;
+            qDiv.classList.add('correct');
+            rDiv.classList.add('correct');
+            rDiv.innerHTML = `<div class="result-title">✔ Đúng!</div><div class="result-explain">${q.explanation}</div>`;
+          } else {
+            qDiv.classList.add('wrong');
+            rDiv.classList.add('wrong');
+            rDiv.innerHTML = `<div class="result-title" style="color:var(--danger)">✘ Sai!</div><div class="result-explain"><strong>Đáp án đúng:</strong> ${q.options[q.answer]}<br>${q.explanation}</div>`;
+          }
+        } else {
+          qDiv.classList.add('wrong');
+          rDiv.classList.add('wrong');
+          rDiv.innerHTML = `<div class="result-title" style="color:var(--danger)">✘ Chưa trả lời</div>`;
+        }
+        rDiv.style.display = 'block';
+      });
+
+      document.getElementById('score').textContent = `${score}/20`;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('englishQuizHighScore', highScore);
+        document.getElementById('highScore').textContent = `${highScore}/20`;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function saveCurrentNote() {
+      if (!currentNoteId) return;
+
+      const title =
+        document.getElementById('noteTitleInput').value;
+
+      const content =
+        document.getElementById('noteContentInput').value;
+
+      const updated =
+        NotesManager.update(
+          currentNoteId,
+          title,
+          content
+        );
+
+      if (updated) {
+        updateNoteMeta(updated);
+        renderNotesList();
+
+        alert('Đã lưu ghi chú');
+      }
+    }
+
+    function resetQuiz() {
+      submittedAnswers = {};
+      currentQuestions.forEach((_, i) => {
+        const r = document.querySelector(`input[name="q${i}"]:checked`);
+        if (r) r.checked = false;
+        const rDiv = document.getElementById(`result-${i}`);
+        const qDiv = document.getElementById(`question-${i}`);
+        rDiv.style.display = 'none';
+        qDiv.classList.remove('correct', 'wrong');
+      });
+      document.getElementById('score').textContent = '—';
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── NOTES ──
+    let currentNoteId = null;
+    let saveTimer = null;
+
+    function renderNotesList() {
+      const notes = NotesManager.getAll();
+      const list = document.getElementById('notesList');
+      const countEl = document.getElementById('notes-count');
+      countEl.textContent = notes.length + ' ghi chú';
+
+      if (notes.length === 0) {
+        list.innerHTML = '<div class="notes-empty">Chưa có ghi chú nào.<br>Nhấn "Mới" để bắt đầu.</div>';
+        return;
+      }
+
+      list.innerHTML = notes.map(n => `
+        <div class="note-item ${n.id === currentNoteId ? 'active' : ''}" onclick="openNote(${n.id})">
+          <div class="note-item-title">${escapeHtml(n.title)}</div>
+          <div class="note-item-preview">${escapeHtml(n.content.substring(0, 60)) || 'Không có nội dung'}</div>
+          <div class="note-item-date">${NotesManager.formatDate(n.updatedAt)}</div>
+        </div>
+      `).join('');
+    }
+
+    function newNote() {
+      const note = NotesManager.add('', '');
+      currentNoteId = note.id;
+      renderNotesList();
+      showEditor(note);
+      document.getElementById('noteTitleInput').focus();
+    }
+
+    function openNote(id) {
+      const notes = NotesManager.getAll();
+      const note = notes.find(n => n.id === id);
+      if (!note) return;
+      currentNoteId = id;
+      renderNotesList();
+      showEditor(note);
+    }
+
+    function showEditor(note) {
+      document.getElementById('notePlaceholder').style.display = 'none';
+      document.getElementById('noteEditor').style.display = 'flex';
+      document.getElementById('noteTitleInput').value = note.title === 'Ghi chú không tiêu đề' ? '' : note.title;
+      document.getElementById('noteContentInput').value = note.content;
+      updateNoteMeta(note);
+    }
+
+    function updateNoteMeta(note) {
+      document.getElementById('noteMetaDate').textContent = 'Cập nhật: ' + NotesManager.formatDate(note.updatedAt);
+      const words = note.content ? note.content.trim().split(/\s+/).filter(Boolean).length : 0;
+      document.getElementById('noteMetaWords').textContent = words + ' từ';
+    }
+
+    function autoSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        if (!currentNoteId) return;
+        const title = document.getElementById('noteTitleInput').value;
+        const content = document.getElementById('noteContentInput').value;
+        const updated = NotesManager.update(currentNoteId, title, content);
+        if (updated) {
+          updateNoteMeta(updated);
+          renderNotesList();
+        }
+      }, 400);
+    }
+
+    function deleteCurrentNote() {
+      if (!currentNoteId) return;
+      if (!confirm('Xóa ghi chú này?')) return;
+      NotesManager.delete(currentNoteId);
+      currentNoteId = null;
+      document.getElementById('noteEditor').style.display = 'none';
+      document.getElementById('notePlaceholder').style.display = 'flex';
+      renderNotesList();
+    }
+
+    function escapeHtml(str = '') {
+      return str
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+  </script>
+</body>
+</html>
