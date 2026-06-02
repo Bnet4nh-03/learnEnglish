@@ -1327,6 +1327,21 @@
               </button>
             </div>
           </div>
+
+          <div class="notes-controls" style="display:flex;gap:8px;align-items:center;margin:10px 0;">
+            <input id="notesSearch" type="search" placeholder="Tìm kiếm ghi chú..." style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;" oninput="onNotesSearchInput(event)" />
+            <select id="notesSort" onchange="onNotesSortChange(event)" style="padding:8px;border:1px solid var(--border);border-radius:6px;">
+              <option value="updated_desc">Mới nhất</option>
+              <option value="updated_asc">Cũ nhất</option>
+              <option value="title_asc">Tên A→Z</option>
+              <option value="title_desc">Tên Z→A</option>
+            </select>
+            <select id="folderFilter" onchange="onFolderFilterChange(event)" style="padding:8px;border:1px solid var(--border);border-radius:6px;min-width:160px;">
+              <option value="">Tất cả thư mục</option>
+            </select>
+            <button class="btn" id="newFolderBtn" onclick="createFolderPrompt()" style="padding:8px 10px;border-radius:6px;">Thư mục mới</button>
+          </div>
+
           <div class="notes-list" id="notesList">
             <div class="notes-empty">Chưa có ghi chú nào.<br>Nhấn "Mới" để bắt đầu.</div>
           </div>
@@ -1340,6 +1355,10 @@
             <div class="note-editor-toolbar">
               <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Tiêu đề ghi chú..." oninput="autoSave()" />
               
+              <select id="noteFolderSelect" onchange="onNoteFolderChange(event)" style="margin-left:12px;padding:8px;border:1px solid var(--border);border-radius:6px;min-width:160px;">
+                <option value="">Không có thư mục</option>
+              </select>
+
               <div class="highlight-toolbar">
                 <button class="highlight-btn yellow" onclick="highlightSelection('yellow')" title="Highlight vàng" type="button">🟡</button>
                 <button class="highlight-btn green" onclick="highlightSelection('green')" title="Highlight xanh" type="button">🟢</button>
@@ -1547,6 +1566,59 @@
     let currentNoteId = null;
     let saveTimer = null;
 
+    // Notes UI state
+    let notesSearchQuery = '';
+    let notesSortMode = 'updated_desc';
+    let notesFolderFilter = '';
+    let notesViewMode = 'list';
+
+    function onNotesSearchInput(e) {
+      notesSearchQuery = (e.target.value || '').trim();
+      renderNotesList();
+    }
+
+    function onNotesSortChange(e) {
+      notesSortMode = e.target.value;
+      renderNotesList();
+    }
+
+    function onFolderFilterChange(e) {
+      notesFolderFilter = e.target.value;
+      renderNotesList();
+    }
+
+    function createFolderPrompt() {
+      const name = prompt('Tên thư mục mới:');
+      if (!name) return;
+      NotesManager.createFolder(name);
+      populateFolderFilter();
+      renderNotesList();
+      alert('Đã tạo thư mục.');
+    }
+
+    function populateFolderFilter() {
+      const sel = document.getElementById('folderFilter');
+      if (!sel) return;
+      const folders = NotesManager.getFolders();
+      sel.innerHTML = '';
+      const opts = ['<option value="">Tất cả thư mục</option>', '<option value="null">Không có thư mục</option>'];
+      opts.push(...folders.map(f => `<option value="${f.id}">${escapeHtml(f.name)}</option>`));
+      sel.innerHTML = opts.join('');
+      if (notesFolderFilter) sel.value = notesFolderFilter;
+    }
+
+    function highlightHtml(text = '', query = '') {
+      const safe = escapeHtml(String(text));
+      if (!query) return safe;
+      try {
+        const q = String(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(q, 'ig');
+        return safe.replace(re, m => `<mark>${m}</mark>`);
+      } catch (e) {
+        return safe;
+      }
+    }
+
     // ── NOTE INFO VARIABLE ──
     let currentNoteInfo = {
       id: null,
@@ -1558,7 +1630,11 @@
     };
 
     function renderNotesList() {
-      const notes = NotesManager.getAll();
+      // ensure folder filter list is up-to-date
+      populateFolderFilter();
+
+      const options = { search: notesSearchQuery, folderId: notesFolderFilter, sort: notesSortMode };
+      const notes = NotesManager.getAll(options);
       const list = document.getElementById('notesList');
       const countEl = document.getElementById('notes-count');
       countEl.textContent = notes.length + ' ghi chú';
@@ -1568,13 +1644,24 @@
         return;
       }
 
-      list.innerHTML = notes.map(n => `
-        <div class="note-item ${n.id === currentNoteId ? 'active' : ''}" onclick="openNote(${n.id})">
-          <div class="note-item-title">${escapeHtml(n.title)}</div>
-          <div class="note-item-preview">${escapeHtml(n.content.substring(0, 60)) || 'Không có nội dung'}</div>
-          <div class="note-item-date">${NotesManager.formatDate(n.updatedAt)}</div>
-        </div>
-      `).join('');
+      const folders = NotesManager.getFolders();
+      const folderById = Object.fromEntries(folders.map(f => [String(f.id), f]));
+
+      list.innerHTML = notes.map(n => {
+        const title = highlightHtml(n.title, notesSearchQuery);
+        const preview = highlightHtml((n.content || '').substring(0, 120), notesSearchQuery) || 'Không có nội dung';
+        const folderName = n.folderId ? escapeHtml((folderById[String(n.folderId)] || {}).name || '') : '';
+        return `
+          <div class="note-item ${n.id === currentNoteId ? 'active' : ''}" onclick="openNote(${n.id})">
+            <div class="note-item-title">${title}</div>
+            <div class="note-item-preview">${preview}</div>
+            <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px;">
+              <div class="note-item-date">${NotesManager.formatDate(n.updatedAt)}</div>
+              ${folderName ? `<div class="note-item-folder" style="font-size:12px;color:var(--text-2);padding:4px 8px;border-radius:6px;background:var(--surface-2);">${folderName}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function newNote() {
@@ -1615,7 +1702,27 @@
       document.getElementById('noteEditor').style.display = 'flex';
       document.getElementById('noteTitleInput').value = note.title === 'Ghi chú không tiêu đề' ? '' : note.title;
       document.getElementById('noteContentInput').value = note.content;
+      // populate folder select and meta
+      populateNoteFolderSelect(note);
       updateNoteMeta(note);
+    }
+
+    function populateNoteFolderSelect(note) {
+      const sel = document.getElementById('noteFolderSelect');
+      if (!sel) return;
+      const folders = NotesManager.getFolders();
+      const opts = ['<option value="">Không có thư mục</option>'];
+      opts.push(...folders.map(f => `<option value="${f.id}">${escapeHtml(f.name)}</option>`));
+      sel.innerHTML = opts.join('');
+      sel.value = note.folderId || '';
+    }
+
+    function onNoteFolderChange(e) {
+      const val = e.target.value;
+      if (!currentNoteId) return;
+      NotesManager.setNoteFolder(currentNoteId, val || null);
+      currentNoteInfo.folderId = val || null;
+      renderNotesList();
     }
 
     function updateNoteMeta(note) {
