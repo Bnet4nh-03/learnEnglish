@@ -256,9 +256,52 @@
     .theory-panel { display: none; }
     .theory-panel.active { display: block; }
 
+    /* Vertical layout for theory page: left sidebar navigation */
+    .theory-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    .theory-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 12px);
+      height: calc(100vh - calc(var(--nav-h) + 24px));
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .theory-sidebar .theory-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0;
+      padding-bottom: 0;
+    }
+
+    .theory-sidebar .theory-tab-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: none;
+    }
+
+    .theory-content { min-width: 0; }
+
     @media (max-width: 700px) {
       .theory-tabs { gap: 6px; }
       .theory-tab-btn { padding: 8px 10px; font-size: 13px; }
+    }
+
+    @media (max-width: 900px) {
+      .theory-layout { grid-template-columns: 1fr; }
+      .theory-sidebar { position: static; height: auto; padding: 8px 0; }
+      .theory-sidebar .theory-tabs { flex-direction: row; overflow-x: auto; padding-bottom: 6px; }
+      .theory-sidebar .theory-tab-btn { display: inline-flex; width: auto; white-space: nowrap; }
     }
 
     .tag {
@@ -888,15 +931,40 @@
         <p>Master English tenses, modals, and phrasal verbs</p>
       </div>
 
-      <div class="theory-tabs">
-        <button class="theory-tab-btn active" data-tab="tenses" onclick="switchTheoryTab('tenses')">Tenses</button>
-        <button class="theory-tab-btn" data-tab="conditionals" onclick="switchTheoryTab('conditionals')">Conditionals</button>
-        <button class="theory-tab-btn" data-tab="conjunctions" onclick="switchTheoryTab('conjunctions')">Conjunctions</button>
-        <button class="theory-tab-btn" data-tab="relative" onclick="switchTheoryTab('relative')">Relative Clauses</button>
-        <button class="theory-tab-btn" data-tab="pronouns" onclick="switchTheoryTab('pronouns')">That / Which / What</button>
-      </div>
+      <div class="theory-layout">
+        <aside class="theory-sidebar">
+          <div class="theory-tabs">
+            <button class="theory-tab-btn active" data-tab="tenses" onclick="switchTheoryTab('tenses')">Tenses</button>
+            <button class="theory-tab-btn" data-tab="conditionals" onclick="switchTheoryTab('conditionals')">Conditionals</button>
+            <button class="theory-tab-btn" data-tab="conjunctions" onclick="switchTheoryTab('conjunctions')">Conjunctions</button>
+            <button class="theory-tab-btn" data-tab="relative" onclick="switchTheoryTab('relative')">Relative Clauses</button>
+            <button class="theory-tab-btn" data-tab="pronouns" onclick="switchTheoryTab('pronouns')">That / Which / What</button>
+            <button class="theory-tab-btn" data-tab="foundations" onclick="switchTheoryTab('foundations')">Foundations</button>
+            <button class="theory-tab-btn" data-tab="nouns" onclick="switchTheoryTab('nouns')">Nouns</button>
+            <button class="theory-tab-btn" data-tab="articles" onclick="switchTheoryTab('articles')">Articles & Determiners</button>
+            <button class="theory-tab-btn" data-tab="verbs" onclick="switchTheoryTab('verbs')">Verbs</button>
+            <button class="theory-tab-btn" data-tab="modals" onclick="switchTheoryTab('modals')">Modal Verbs</button>
+            <button class="theory-tab-btn" data-tab="adjadv" onclick="switchTheoryTab('adjadv')">Adjectives & Adverbs</button>
+            <button class="theory-tab-btn" data-tab="questions" onclick="switchTheoryTab('questions')">Questions</button>
+            <button class="theory-tab-btn" data-tab="passive" onclick="switchTheoryTab('passive')">Passive Voice</button>
+            <button class="theory-tab-btn" data-tab="gerunds" onclick="switchTheoryTab('gerunds')">Gerunds & Infinitives</button>
+            <button class="theory-tab-btn" data-tab="reported" onclick="switchTheoryTab('reported')">Reported Speech</button>
+            <button class="theory-tab-btn" data-tab="clauses" onclick="switchTheoryTab('clauses')">Clauses</button>
+            <button class="theory-tab-btn" data-tab="prepositions" onclick="switchTheoryTab('prepositions')">Prepositions</button>
+            <button class="theory-tab-btn" data-tab="phrasal" onclick="switchTheoryTab('phrasal')">Phrasal Verbs</button>
+            <button class="theory-tab-btn" data-tab="comparisons" onclick="switchTheoryTab('comparisons')">Comparisons</button>
+            <button class="theory-tab-btn" data-tab="wordformation" onclick="switchTheoryTab('wordformation')">Word Formation</button>
+            <button class="theory-tab-btn" data-tab="vocab" onclick="switchTheoryTab('vocab')">Vocabulary Systems</button>
+            <button class="theory-tab-btn" data-tab="advanced" onclick="switchTheoryTab('advanced')">Advanced Grammar</button>
+            <button class="theory-tab-btn" data-tab="discourse" onclick="switchTheoryTab('discourse')">Discourse & Writing</button>
+            <button class="theory-tab-btn" data-tab="academic" onclick="switchTheoryTab('academic')">Academic English</button>
+            <button class="theory-tab-btn" data-tab="business" onclick="switchTheoryTab('business')">Business / Technical English</button>
+            <button class="theory-tab-btn" data-tab="studyorder" onclick="switchTheoryTab('studyorder')">Study Order</button>
+          </div>
+        </aside>
 
-      <div class="theory-panels">
+        <div class="theory-content">
+          <div class="theory-panels">
         <section id="theory-tenses" class="theory-panel active">
           <div class="table-card">
             <table class="theory-table">
@@ -993,6 +1061,13 @@
               <td>Hành động hoàn tất trước một thời điểm tương lai</td>
               <td class="example">She will have finished by tomorrow.</td>
               <td><div class="time-words"><span class="tag">by</span><span class="tag">before</span><span class="tag">by the time</span></div></td>
+            </tr>
+            <tr>
+              <td>Future Perfect Continuous</td>
+              <td><span class="formula">S + will have been + V-ing</span></td>
+              <td>Hành động kéo dài đến hoặc trước một thời điểm trong tương lai</td>
+              <td class="example">She will have been working for 3 hours by then.</td>
+              <td><div class="time-words"><span class="tag">for</span><span class="tag">by</span><span class="tag">by the time</span></div></td>
             </tr>
           </tbody>
             </table>
@@ -1248,7 +1323,347 @@
             </table>
           </div>
         </section>
-      </div>
+
+        <!-- Additional theory sections added per user request -->
+
+        <section id="theory-foundations" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Topic</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Parts of Speech</td><td>Noun, Verb, Adj, Adv, Pronoun, Prep, Conj, Interjection</td><td class="example">Noun: cat; Verb: run</td></tr>
+                <tr><td>Sentence Structure</td><td>Subject + Verb + Object is the basic order in English</td><td class="example">She (S) eats (V) an apple (O).</td></tr>
+                <tr><td>Subject / Verb / Object</td><td>Xác định chủ ngữ, động từ chính, tân ngữ</td><td class="example">John (S) bought (V) a car (O).</td></tr>
+                <tr><td>Types of Sentences</td><td>Declarative, Interrogative, Imperative, Exclamatory</td><td class="example">Are you ready? (Question)</td></tr>
+                <tr><td>Capitalization & Punctuation</td><td>Capital letters for names/sentences; .,?,!, commas, colons, semicolons</td><td class="example">She said, "Hello."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-nouns" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Topic</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Countable / Uncountable</td><td>Countable: have plural forms; Uncountable: no plural, use much / a little</td><td class="example">apples vs information</td></tr>
+                <tr><td>Singular / Plural</td><td>Regular (-s/-es) and irregular plurals</td><td class="example">cat → cats; child → children</td></tr>
+                <tr><td>Possessives</td><td>'s and of for possession</td><td class="example">Anna's book / the color of the car</td></tr>
+                <tr><td>Collective Nouns</td><td>group words: team, family, committee</td><td class="example">The team is ready.</td></tr>
+                <tr><td>Compound Nouns</td><td>Noun + Noun or Adj + Noun (closed, hyphenated, open)</td><td class="example">toothpaste, mother-in-law, high school</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-articles" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Item</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>a / an / the</td><td>'a/an' = indefinite; 'the' = definite</td><td class="example">a dog, an apple, the book</td></tr>
+                <tr><td>Zero Article</td><td>No article with plural/general nouns and some proper nouns</td><td class="example">I like coffee. / Dogs are friendly.</td></tr>
+                <tr><td>this / that / these / those</td><td>Demonstratives as determiners</td><td class="example">This book, those chairs</td></tr>
+                <tr><td>some / any</td><td>Some for affirmative, any for negatives/questions</td><td class="example">I have some tea. / Do you have any questions?</td></tr>
+                <tr><td>much / many</td><td>Much with uncountable; many with countable</td><td class="example">much water / many people</td></tr>
+                <tr><td>few / little</td><td>Few (countable), little (uncountable) — quantity</td><td class="example">a few apples / a little milk</td></tr>
+                <tr><td>each / every</td><td>each = từng cái; every = toàn bộ nhóm (singular verb)</td><td class="example">Each student has a book. Every student is ready.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-verbs" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Type</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Main Verbs</td><td>Convey main action or state</td><td class="example">She writes every day.</td></tr>
+                <tr><td>Auxiliary Verbs</td><td>be / have / do used with main verbs</td><td class="example">She is writing. / Do you like it?</td></tr>
+                <tr><td>Linking Verbs</td><td>Link subject to complement (be, seem, become)</td><td class="example">He seems tired.</td></tr>
+                <tr><td>Transitive / Intransitive</td><td>Transitive needs object; intransitive does not</td><td class="example">She opened the door. / He sleeps.</td></tr>
+                <tr><td>Stative vs Dynamic</td><td>Stative verbs (know, love) usually not used in continuous</td><td class="example">I know her. (not "I am knowing")</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-modals" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Modal</th><th>Meaning / Use</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>can / could</td><td>ability / past ability / polite requests</td><td class="example">I can swim. / Could you help me?</td></tr>
+                <tr><td>may / might</td><td>permission / possibility</td><td class="example">May I come in? / It might rain.</td></tr>
+                <tr><td>should</td><td>advice / expectation</td><td class="example">You should study.</td></tr>
+                <tr><td>must / have to</td><td>strong obligation (must) / external necessity (have to)</td><td class="example">You must stop. / I have to go.</td></tr>
+                <tr><td>ought to / need to</td><td>advice / necessity</td><td class="example">You ought to rest. / You need to eat.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-adjadv" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Topic</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Position of Adjectives</td><td>Before noun or after linking verb</td><td class="example">a red car / The car is red.</td></tr>
+                <tr><td>Comparative</td><td>-er or more + adj</td><td class="example">bigger / more beautiful</td></tr>
+                <tr><td>Superlative</td><td>-est or most + adj</td><td class="example">the biggest / the most useful</td></tr>
+                <tr><td>Adverbs of Frequency</td><td>always, usually, often, sometimes, never</td><td class="example">He often comes late.</td></tr>
+                <tr><td>Adverbs of Manner</td><td>how something is done (quickly, carefully)</td><td class="example">She speaks clearly.</td></tr>
+                <tr><td>Degree Adverbs</td><td>very, quite, too, enough</td><td class="example">It's very hot.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-questions" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Type</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Yes/No Questions</td><td>Auxiliary inversion: Do/Does/Did, Are/Is</td><td class="example">Do you like coffee?</td></tr>
+                <tr><td>WH Questions</td><td>who, what, where, when, why, how — request information</td><td class="example">Where do you live?</td></tr>
+                <tr><td>Question Tags</td><td>short tag added to seek confirmation</td><td class="example">You're coming, aren't you?</td></tr>
+                <tr><td>Indirect Questions</td><td>Polite forms: Could you tell me... / I wonder whether...</td><td class="example">Could you tell me the time?</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-passive" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Item</th><th>Formula / Use</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Basic Passive</td><td>be + Vpp — focus on action/receiver</td><td class="example">The cake was eaten.</td></tr>
+                <tr><td>Passive in All Tenses</td><td>Use appropriate 'be' + past participle</td><td class="example">is being repaired / will be finished</td></tr>
+                <tr><td>Passive with Modals</td><td>modal + be + Vpp</td><td class="example">The work must be done.</td></tr>
+                <tr><td>Causative Passive</td><td>have/get + something + past participle</td><td class="example">I had my house painted.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-gerunds" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Pattern</th><th>Use / Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Verb + V-ing</td><td>after enjoy, avoid, consider, suggest</td><td class="example">I enjoy reading.</td></tr>
+                <tr><td>Verb + to-infinitive</td><td>after decide, hope, want</td><td class="example">She decided to leave.</td></tr>
+                <tr><td>Bare infinitive</td><td>after let, make, see, hear</td><td class="example">Let him go. / I saw her leave.</td></tr>
+                <tr><td>Special verb patterns</td><td>Some verbs change meaning with gerund vs infinitive</td><td class="example">I stopped smoking. / I stopped to smoke.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-reported" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Type</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Reported Statements</td><td>Change tense (backshift) and pronouns/time expressions</td><td class="example">He said ("I am tired") → He said he was tired.</td></tr>
+                <tr><td>Reported Questions</td><td>Use 'if/whether' for yes/no; reorder subject/verb</td><td class="example">She asked where I lived.</td></tr>
+                <tr><td>Reported Commands</td><td>use 'tell'/'ask' + to-infinitive</td><td class="example">He told me to leave.</td></tr>
+                <tr><td>Backshift Rules</td><td>Present → Past, Past → Past Perfect, will → would</td><td class="example">"I will" → said he would</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-clauses" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Clause</th><th>Function</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Noun Clauses</td><td>Act as noun (subject/object)</td><td class="example">What he said is true.</td></tr>
+                <tr><td>Adjective Clauses</td><td>Modify nouns (relative clauses)</td><td class="example">The book that I read was good.</td></tr>
+                <tr><td>Adverb Clauses</td><td>Express time, reason, contrast, condition</td><td class="example">I'll call you when I arrive.</td></tr>
+                <tr><td>Independent / Dependent</td><td>Main clause vs subordinate clause</td><td class="example">I left because I was tired.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-prepositions" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Type</th><th>Examples / Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Time Prepositions</td><td>in / on / at / during / since / for</td><td class="example">in 2020 / on Monday / at 5pm</td></tr>
+                <tr><td>Place Prepositions</td><td>in / on / at / under / between / next to</td><td class="example">She is at the office.</td></tr>
+                <tr><td>Movement Prepositions</td><td>to / into / through / across / along</td><td class="example">He walked to school.</td></tr>
+                <tr><td>Preposition Combinations</td><td>interested in, good at, depend on</td><td class="example">She is good at math.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-phrasal" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Phrasal Verb</th><th>Meaning</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>get up</td><td>rise from bed</td><td class="example">I get up at 7am.</td></tr>
+                <tr><td>look for</td><td>search</td><td class="example">I'm looking for my keys.</td></tr>
+                <tr><td>give up</td><td>stop trying / quit</td><td class="example">Don't give up!</td></tr>
+                <tr><td>set up</td><td>arrange / establish</td><td class="example">They set up a meeting.</td></tr>
+                <tr><td>take off</td><td>leave the ground / remove</td><td class="example">The plane took off.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-comparisons" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Item</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Comparative</td><td>-er / more + adj</td><td class="example">This book is better.</td></tr>
+                <tr><td>Superlative</td><td>-est / most + adj</td><td class="example">He is the tallest.</td></tr>
+                <tr><td>as...as</td><td>show equality</td><td class="example">She is as tall as him.</td></tr>
+                <tr><td>less / fewer</td><td>less for uncountable, fewer for countable</td><td class="example">fewer apples / less water</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-wordformation" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Area</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Prefixes</td><td>change meaning (un-, re-, in-)</td><td class="example">happy → unhappy</td></tr>
+                <tr><td>Suffixes</td><td>create word class (-ness, -ly, -ment)</td><td class="example">happy → happiness</td></tr>
+                <tr><td>Compound Words</td><td>two words combined</td><td class="example">sunflower, bedroom</td></tr>
+                <tr><td>Word Families</td><td>related words with common root</td><td class="example">act, action, active</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-vocab" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>System</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Collocations</td><td>Words that commonly go together</td><td class="example">make a decision, heavy rain</td></tr>
+                <tr><td>Idioms</td><td>Fixed expressions with figurative meaning</td><td class="example">Break the ice</td></tr>
+                <tr><td>Synonyms / Antonyms</td><td>Similar or opposite meanings</td><td class="example">big / large ; big / small</td></tr>
+                <tr><td>Academic / Technical Vocabulary</td><td>Formal words used in writing or specific fields</td><td class="example">analyze, implement</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-advanced" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Feature</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Inversion</td><td>Subject-auxiliary inversion for emphasis or conditionals</td><td class="example">Never have I seen...</td></tr>
+                <tr><td>Subjunctive</td><td>Hypothetical or formal expressions (wish, suggest)</td><td class="example">I suggest that he study harder.</td></tr>
+                <tr><td>Cleft Sentences</td><td>For emphasis (It was X that...)</td><td class="example">It was John who broke it.</td></tr>
+                <tr><td>Ellipsis</td><td>Omitting repeated words for conciseness</td><td class="example">She can play the piano, and he can (play the piano) too.</td></tr>
+                <tr><td>Parallel Structure</td><td>Use same grammatical forms in lists</td><td class="example">She likes reading, writing, and swimming.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-discourse" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Area</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Linking Words</td><td>however, therefore, moreover—connect ideas coherently</td><td class="example">However, we decided to stay.</td></tr>
+                <tr><td>Cohesion</td><td>Reference, substitution, conjunction for flow</td><td class="example">Use pronouns to avoid repetition.</td></tr>
+                <tr><td>Coherence</td><td>Logical organization of ideas</td><td class="example">Clear topic sentences in paragraphs.</td></tr>
+                <tr><td>Formal vs Informal</td><td>Choose tone based on audience</td><td class="example">Use 'purchase' (formal) vs 'buy' (informal)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-academic" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Topic</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Essay Structure</td><td>Intro, body paragraphs, conclusion</td><td class="example">Thesis statement in introduction</td></tr>
+                <tr><td>Formal Writing</td><td>Use formal tone, avoid contractions</td><td class="example">It is recommended that...</td></tr>
+                <tr><td>Paraphrasing</td><td>Express same idea in new words</td><td class="example">Original → paraphrase</td></tr>
+                <tr><td>Summarizing</td><td>Condense main points</td><td class="example">Write the gist in one paragraph.</td></tr>
+                <tr><td>Citation Language</td><td>Reporting verbs and referencing conventions</td><td class="example">According to Smith (2020)...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-business" class="theory-panel">
+          <div class="table-card">
+            <table class="theory-table">
+              <thead><tr><th>Area</th><th>Notes</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>Email Writing</td><td>Clear subject, polite sign-offs, concise content</td><td class="example">Dear Mr. Lee, ... Regards</td></tr>
+                <tr><td>Presentation Language</td><td>Opening, signposting, concluding phrases</td><td class="example">Today I will present...</td></tr>
+                <tr><td>Documentation</td><td>Use precise, unambiguous language</td><td class="example">Installation steps, API docs</td></tr>
+                <tr><td>Meeting Expressions</td><td>Agenda, minutes, action items</td><td class="example">Let's take the minutes.</td></tr>
+                <tr><td>Technical Reading</td><td>Skimming for structure, scanning for details</td><td class="example">Read headings, then details.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theory-studyorder" class="theory-panel">
+          <div class="table-card" style="padding:18px;">
+            <h3 style="margin:0 0 12px 0;">Thứ tự học khuyên dùng</h3>
+            <div style="padding:8px 16px;">
+              <strong>Beginner</strong>
+              <ul style="margin-top:6px;margin-bottom:12px;padding-left:18px;">
+                <li>Parts of Speech</li>
+                <li>Sentence Structure</li>
+                <li>Basic Tenses</li>
+                <li>Questions</li>
+                <li>Nouns & Articles</li>
+              </ul>
+
+              <strong>Intermediate</strong>
+              <ul style="margin-top:6px;margin-bottom:12px;padding-left:18px;">
+                <li>Modal Verbs</li>
+                <li>Passive Voice</li>
+                <li>Gerunds & Infinitives</li>
+                <li>Relative Clauses</li>
+                <li>Conditionals</li>
+              </ul>
+
+              <strong>Upper Intermediate</strong>
+              <ul style="margin-top:6px;margin-bottom:12px;padding-left:18px;">
+                <li>Reported Speech</li>
+                <li>Clauses</li>
+                <li>Phrasal Verbs</li>
+                <li>Prepositions</li>
+                <li>Comparisons</li>
+              </ul>
+
+              <strong>Advanced</strong>
+              <ul style="margin-top:6px;padding-left:18px;">
+                <li>Inversion</li>
+                <li>Subjunctive</li>
+                <li>Academic Writing</li>
+                <li>Discourse</li>
+                <li>Advanced Structures</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+          </div> <!-- end theory-panels -->
+        </div> <!-- end theory-content -->
+      </div> <!-- end theory-layout -->
     </div>
 
     <!-- ── QUIZ PAGE ── -->
